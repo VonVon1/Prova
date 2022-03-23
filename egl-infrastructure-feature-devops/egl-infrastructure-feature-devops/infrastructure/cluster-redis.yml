@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Sets up ecs cluster
+Parameters:
+  ClusterName:
+    Type: String
+
+  CacheNodeType:
+    Type: String
+
+  NumCacheNode:
+    Type: String
+
+Conditions:
+  numCacheNode: !Equals [!Ref NumCacheNode, "0"]
+
+Resources:
+  SsmElasticCacheAddress:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub /ECS-CLUSTER/${ClusterName}/REDIS_ADDRESS
+      Value: !Sub ${RedisReplicationGroupV2.PrimaryEndPoint.Address}
+      Type: String
+
+  CacheSubnetGroup:
+    Type: AWS::ElastiCache::SubnetGroup
+    Properties:
+      Description: !Sub ${ClusterName}-SubnetGroup
+      SubnetIds:
+        - 'Fn::ImportValue': !Sub ${ClusterName}PrivateSubnet1
+        - 'Fn::ImportValue': !Sub ${ClusterName}PrivateSubnet2
+
+  RedisReplicationGroupV2:
+    Type: AWS::ElastiCache::ReplicationGroup
+    Properties:
+      AutomaticFailoverEnabled: !If [numCacheNode, false, true]
+      AutoMinorVersionUpgrade: true
+      ReplicationGroupId: !Ref ClusterName
+      CacheNodeType: !Ref CacheNodeType
+      CacheSubnetGroupName: !Ref CacheSubnetGroup
+      Engine: redis
+      EngineVersion: "5.0.6"
+      NumNodeGroups: 1
+      ReplicasPerNodeGroup: !Ref NumCacheNode
+      Port: 6379
+      PreferredMaintenanceWindow: sun:05:00-sun:09:00
+      ReplicationGroupDescription: !Sub ${ClusterName}RepplicationGroup
+      SecurityGroupIds:
+        - 'Fn::ImportValue': !Sub ${ClusterName}InternalAccessSecurityGroup
+      SnapshotRetentionLimit: 5
+      SnapshotWindow: 10:00-12:00

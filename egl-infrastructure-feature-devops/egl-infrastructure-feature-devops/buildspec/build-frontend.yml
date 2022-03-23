@@ -1,0 +1,52 @@
+version: 0.2
+env:
+  parameter-store:
+    DEPLOY_BUCKET: "/ECS-CLUSTER/${ClusterName}/${ProjectName}/AWS_S3"
+    DISTRIBUTION_ID: "/ECS-CLUSTER/${ClusterName}/${ProjectName}/DISTRIBUTION_ID"
+  secrets-manager:
+    API_PROTOCOL: "${Environment}/FRONT-END:API_PROTOCOL"
+    API_HOST: "${Environment}/FRONT-END:API_HOST"
+    STORE_NAME: "${Environment}/FRONT-END:STORE_NAME"
+    LOGGER: "${Environment}/FRONT-END:LOGGER"
+    REACT_APP_STORE_NAME: "${Environment}/FRONT-END:REACT_APP_STORE_NAME"
+    REACT_APP_PUBLIC_STRIPE_API_KEY: "${Environment}/FRONT-END:REACT_APP_PUBLIC_STRIPE_API_KEY"
+    REACT_APP_BASE_URL: "${Environment}/FRONT-END:REACT_APP_BASE_URL"
+    BASE_URL: "${Environment}/FRONT-END:BASE_URL"
+    API_BASE_URL: "${Environment}/FRONT-END:API_BASE_URL"
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+  pre_build:
+    commands:
+      - cd $CODEBUILD_SRC_DIR_App
+      - echo Installing source NPM dependencies...
+      - npm install -g yarn
+      - yarn install
+      - rm -rf .env
+      - touch .env
+      - echo "API_PROTOCOL=$API_PROTOCOL" >> .env
+      - echo "API_HOST=$API_HOST" >> .env
+      - echo "STORE_NAME=$STORE_NAME" >> .env
+      - echo "LOGGER=$LOGGER" >> .env
+      - echo "REACT_APP_STORE_NAME=$REACT_APP_STORE_NAME" >> .env
+      - echo "REACT_APP_PUBLIC_STRIPE_API_KEY=$REACT_APP_PUBLIC_STRIPE_API_KEY" >> .env
+      - echo "REACT_APP_BASE_URL=$REACT_APP_BASE_URL" >> .env
+      - echo "BASE_URL=$BASE_URL" >> .env
+      - echo "API_BASE_URL=$API_BASE_URL" >> .env
+      - cp .env dev.env
+      - rm -rf src/.env
+      - cp .env src/.env
+      - cp .env src/dev.env
+  build:
+    commands:
+      - echo Build started on `date`
+      - yarn build
+  post_build:
+    commands:
+      # copy the contents of /build to S3
+      - aws s3 sync --acl public-read ./${BuildFolder} s3://$DEPLOY_BUCKET/ 
+      # to force CloudFront to update its edge locations with the new versions
+      - >
+        aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID 
+        --paths /index.html "/assets*"
