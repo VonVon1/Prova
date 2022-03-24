@@ -37,7 +37,7 @@ Parameters:
   DBHasAutomaticBackup:
     Type: String
 
-  HostedZoneName:
+  HostedZonesName:
     Type: String
 
   CidrIp:
