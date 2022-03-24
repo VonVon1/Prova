@@ -48,19 +48,19 @@ Resources:
   VPC:
     Type: AWS::EC2::VPC
     Properties:
-      CidrBlock: !Sub ${CidrIp}/16
-      EnableDnsSupport: true
-      EnableDnsHostnames: true
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: 'true'
+      EnableDnsHostnames: 'true'
       Tags:
         - Key: Name
-          Value: !Sub ${ClusterName}VPC
+          Value: vpc.prova
   
   InternetGateway:
     Type: AWS::EC2::InternetGateway
     Properties:
       Tags:
         - Key: Name
-          Value: !Sub ${ClusterName}IGVPC
+          Value: internet.gateway
           
   AttachGateway:
     Type: AWS::EC2::VPCGatewayAttachment
