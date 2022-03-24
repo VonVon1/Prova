@@ -8,23 +8,23 @@ Parameters:
   CidrIp:
     Description: Cidr Ip
     Type: String
-    Default: 10.10.0.0
+    Default: 10.0.0.0
 
   IpSubnet1:
     Type: String
-    Default: 10.10.30.0
+    Default: 10.0.0.0
      
   IpSubnet2:
     Type: String
-    Default: 10.10.40.0
+    Default: 10.0.10.0
 
   IpSubnet3:
     Type: String
-    Default: 10.10.10.0
+    Default: 10.0.11.0
 
   IpSubnet4:
     Type: String
-    Default: 10.10.20.0
+    Default: 10.0.12.0
 
 Resources:
 #========== Security Groups
