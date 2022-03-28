@@ -30,7 +30,7 @@ Resources:
   PublicAlb:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
-      Name: !Sub public-alb-${ClusterName}
+      Name: !Sub pub-alb-${ClusterName}
       Type: application
       Scheme: internet-facing
       Subnets:
@@ -43,7 +43,7 @@ Resources:
   PublicAlbDefaultTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      Name: !Sub public-tg-${ClusterName}-default
+      Name: !Sub pub-tg-${ClusterName}
       VpcId:
         'Fn::ImportValue': !Sub ${ClusterName}VPC
       Port: 80
