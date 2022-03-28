@@ -36,8 +36,8 @@ Parameters:
 Conditions:
   dbIsEncrypted: !Not [!Equals [!Ref DBKmsKeyIdArn, "WITHOUT"]]
   dbHasSnapshot: !Not [!Equals [!Ref DBSnapshotName, "WITHOUT"]]
-  dbHasAutomaticBackup: !Equals [!Ref DBHasAutomaticBackup, "true"]
-  dbHasMultiAZ: !Equals [!Ref DBHasMultiAZ, "true"]
+  dbHasAutomaticBackup: [!Equals [!Ref DBHasAutomaticBackup, "true"]]
+  dbHasMultiAZ: [!Equals [!Ref DBHasMultiAZ, "true"]]
 
 Resources:
 #========== Security Groups
