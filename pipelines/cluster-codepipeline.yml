@@ -64,9 +64,6 @@ Parameters:
   EcsImage:
     Type: String
 
-  HostedZonesName:
-    Type: String
-
   TypeProject:  
     Type: String
 
@@ -362,3 +359,6 @@ Resources:
 Outputs:  # Outputs pesquisar sobre
   PipelineUrl:
     Value: !Sub https://console.aws.amazon.com/codepipeline/home?region=${AWS::Region}#/view/${Pipeline}
+
+    # sub!
+    # GetAtt!
