@@ -38,7 +38,7 @@ Parameters:
   
   ######## services parameters ########
   MemoryReservation:
-    Default: "1024"
+    Default: "128"
     Type: String
 
   CPU:

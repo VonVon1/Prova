@@ -182,7 +182,7 @@ Resources:
 
   ArtifactBucket:
     Type: AWS::S3::Bucket
-    DeletionPolicy: Delete
+    DeletionPolicy: Delete              # policy para deletar o bucket na hora de derrubar a stack
     Properties: 
       BucketName: !Ref PropertiesName  # variável
 
@@ -221,7 +221,7 @@ Resources:
                 Provider: CloudFormation
               Configuration:
                 ChangeSetName: Deploy
-                ActionMode: CHANGE_SET_REPLACE         # pesquisar o que é CHANGE SET REPLACE
+                ActionMode: CHANGE_SET_REPLACE         # verificando se o template está saudável
                 StackName: !Sub ${ClusterStackName}-vpc
                 Capabilities: CAPABILITY_NAMED_IAM
                 TemplatePath: !Sub DevOps::infrastructure/cluster-vpc.yml
@@ -230,7 +230,7 @@ Resources:
                   {
                     "ClusterName": "${ClusterName}"
                   }
-              RunOrder: 1                             # pesquisa RunOrder (ordem de execução)
+              RunOrder: 1                             # ordem em que os templates serão executados
               InputArtifacts:
                 - Name: DevOps
             - Name: ExecuteVPCChangeSet
@@ -241,7 +241,7 @@ Resources:
                 Provider: CloudFormation
               Configuration:
                 ChangeSetName: Deploy
-                ActionMode: CHANGE_SET_EXECUTE        # pesquisar o que é CHANGE SET EXECUTE
+                ActionMode: CHANGE_SET_EXECUTE        # executando o template (criação dos services)
                 StackName: !Sub ${ClusterStackName}-vpc
                 RoleArn: !GetAtt CloudFormationExecutionRole.Arn
               RunOrder: 2
