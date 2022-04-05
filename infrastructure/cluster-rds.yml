@@ -31,7 +31,7 @@ Parameters:
 
   PrxServerDBName:
     Type: String
-    Default: developdb
+    Default: blog
 
 Conditions:
   dbIsEncrypted: !Not [!Equals [!Ref DBKmsKeyIdArn, "WITHOUT"]]

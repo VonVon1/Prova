@@ -2,8 +2,12 @@ version: 0.2
 
 env:
   parameter-store:
-    DBHOST: /ECS-CLUSTER/cluster-infra-mat/RDS_ROOT_USERNAME
-    DBPASSWORD: /ECS-CLUSTER/cluster-infra-mat/RDS_ROOT_PASSWORD
+    DBUSERNAME: /ECS-CLUSTER/${ClusterName}/RDS_ROOT_USERNAME
+    DBPASSWORD: /ECS-CLUSTER/${ClusterName}/RDS_ROOT_PASSWORD
+    DBHOST: /ECS-CLUSTER/${ClusterName}/RDS_ADDRESS
+    DBNAME: /ECS-CLUSTER/${ClusterName}/PRX_SERVER/RDS_URL
+    
+
 phases:
   install:
     commands:
@@ -12,14 +16,15 @@ phases:
       - IMAGE_TAG=${START_TIME:=latest}
       - TAG="latest"
   pre_build:
-    commands:
-      - echo $DBHOST >> .env
-      - echo $DBPASSWORD >> .env
-      - echo DB_HOST=$DB_HOST >> .env
-      - echo DB_PASSWORD=$DBPASSWORD >> .env
+    commands: 
       - cp -r ./scripts $CODEBUILD_SRC_DIR_App/app/
       - cp -r ./docker/Dockerfile $CODEBUILD_SRC_DIR_App/app/Dockerfile
-      - cd $CODEBUILD_SRC_DIR_App/app 
+      - cd $CODEBUILD_SRC_DIR_App/app
+      - echo "DB_HOST=$DBHOST" >> .env
+      - echo "DN_NAME=$DBNAME" >> .env
+      - echo "DB_USER=$DBUSERNAME" >> .env
+      - echo "DB_PASSWORD=$DBPASSWORD" >> .env
+      
   build:
     commands:
       - docker build --cache-from "${REPOSITORY_URI}:${TAG}" --tag "${REPOSITORY_URI}:${TAG}" .
