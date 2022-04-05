@@ -1,9 +1,9 @@
 version: 0.2
 
 env:
-  parameter-store:
-    dbhost: /ECS-CLUSTER/cluster-infra-mat/RDS_ROOT_USERNAME
-    dbpassword: /ECS-CLUSTER/cluster-infra-mat/RDS_ROOT_PASSWORD
+    parameter-store:
+        dbhost: /ECS-CLUSTER/cluster-infra-mat/RDS_ROOT_USERNAME
+        dbpassword: /ECS-CLUSTER/cluster-infra-mat/RDS_ROOT_PASSWORD
 phases:
   install:
     commands:
@@ -16,9 +16,11 @@ phases:
       - cp -r ./scripts $CODEBUILD_SRC_DIR_App/app/
       - cp -r ./docker/Dockerfile $CODEBUILD_SRC_DIR_App/app/Dockerfile
       - cd $CODEBUILD_SRC_DIR_App/app
-     # - docker pull "${REPOSITORY_URI}:${TAG}" 
+    # - docker pull "${REPOSITORY_URI}:${TAG}" 
   build:
     commands:
+    # - export /ECS-CLUSTER/cluster-infra-mat/RDS_ROOT_USERNAME
+    # - export /ECS-CLUSTER/cluster-infra-mat/RDS_ROOT_PASSWORD
       - docker build --cache-from "${REPOSITORY_URI}:${TAG}" --tag "${REPOSITORY_URI}:${TAG}" .
       - docker tag $REPOSITORY_URI:$TAG $REPOSITORY_URI:$IMAGE_TAG  
   post_build:
