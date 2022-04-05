@@ -27,7 +27,7 @@ phases:
       
   build:
     commands:
-      - docker build --cache-from "${REPOSITORY_URI}:${TAG}" --tag "${REPOSITORY_URI}:${TAG}" .
+      - docker build --tag "${REPOSITORY_URI}:${TAG}" .
       - docker tag $REPOSITORY_URI:$TAG $REPOSITORY_URI:$IMAGE_TAG  
   post_build:
     commands:
