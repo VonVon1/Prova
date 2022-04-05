@@ -2,10 +2,10 @@ version: 0.2
 
 env:
   parameter-store:
-    DBUSERNAME: /ECS-CLUSTER/${ClusterName}/RDS_ROOT_USERNAME
-    DBPASSWORD: /ECS-CLUSTER/${ClusterName}/RDS_ROOT_PASSWORD
-    DBHOST: /ECS-CLUSTER/${ClusterName}/RDS_ADDRESS
-    DBNAME: /ECS-CLUSTER/${ClusterName}/PRX_SERVER/RDS_URL
+    DBUSERNAME: "/ECS-CLUSTER/${ClusterName}/RDS_ROOT_USERNAME"
+    DBPASSWORD: "/ECS-CLUSTER/${ClusterName}/RDS_ROOT_PASSWORD"
+    DBHOST: "/ECS-CLUSTER/${ClusterName}/RDS_ADDRESS"
+    DBNAME: "/ECS-CLUSTER/${ClusterName}/PRX_SERVER/RDS_URL"
     
 
 phases:
