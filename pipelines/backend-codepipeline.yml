@@ -75,6 +75,7 @@ Resources:
   ArtifactBucket: 
     Type: 'AWS::S3::Bucket'
     Properties: {}
+    DeletionPolicy: Delete
 
   Repository:
     Type: AWS::ECR::Repository
@@ -223,8 +224,8 @@ Resources:
         Image: "aws/codebuild/docker:17.09.0"
         Type: "LINUX_CONTAINER"
         EnvironmentVariables:
-          - Name: BRANCH
-            Value: !Ref GitHubBranch
+      #   - Name: BRANCH
+      #     Value: !Ref GitHubBranch
           - Name: AWS_DEFAULT_REGION
             Value: !Ref AWS::Region
           - Name: REPOSITORY_URI
