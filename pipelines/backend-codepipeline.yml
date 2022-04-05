@@ -144,7 +144,7 @@ Resources:
                   - ecs:*
                   - ecr:*
                   - ec2:*
-                  - ssm:GetParameters
+                  - ssm:*
                   - secretsmanager:*
               - Resource: !Sub arn:aws:s3:::${ArtifactBucket}/*
                 Effect: Allow
