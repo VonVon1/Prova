@@ -17,9 +17,9 @@ phases:
       - TAG="latest"
   pre_build:
     commands: 
-      - cp -r ./scripts $CODEBUILD_SRC_DIR_App
+      - cp -r ./scripts $CODEBUILD_SRC_DIR_App/
       - cp -r ./docker/Dockerfile $CODEBUILD_SRC_DIR_App/Dockerfile
-      - cd $CODEBUILD_SRC_DIR_App
+      - cd $CODEBUILD_SRC_DIR_App/
       - echo "DB_HOST=$DBHOST" >> .env
       - echo "DN_NAME=$DBNAME" >> .env
       - echo "DB_USER=$DBUSERNAME" >> .env
