@@ -2,10 +2,10 @@ version: 0.2
 
 env:
   parameter-store:
-    DBUSERNAME: "/ECS-CLUSTER/cluster-infra-mat/RDS_ROOT_USERNAME"
-    DBPASSWORD: "/ECS-CLUSTER/cluster-infra-mat/RDS_ROOT_PASSWORD"
-    DBHOST: "/ECS-CLUSTER/cluster-infra-mat/RDS_ADDRESS"
-    DBNAME: "/ECS-CLUSTER/cluster-infra-mat/PRX_SERVER/RDS_URL"
+    DBUSERNAME: "/ECS-CLUSTER/${CLUSTER_NAME}/RDS_ROOT_USERNAME"
+    DBPASSWORD: "/ECS-CLUSTER/${CLUSTER_NAME}/RDS_ROOT_PASSWORD"
+    DBHOST: "/ECS-CLUSTER/${CLUSTER_NAME}/RDS_ADDRESS"
+    DBNAME: "/ECS-CLUSTER/${CLUSTER_NAME}/PRX_SERVER/RDS_URL"
     
 
 phases:
@@ -17,8 +17,8 @@ phases:
       - TAG="latest"
   pre_build:
     commands: 
-      - cp -r ./scripts $CODEBUILD_SRC_DIR_App/app/
-      - cp -r ./docker/Dockerfile $CODEBUILD_SRC_DIR_App/app/Dockerfile
+      - cp -r ./scripts $CODEBUILD_SRC_DIR_App/
+      - cp -r ./docker/Dockerfile $CODEBUILD_SRC_DIR_App/Dockerfile
       - cd $CODEBUILD_SRC_DIR_App/
       - echo "DB_HOST=$DBHOST" >> .env
       - echo "DN_NAME=$DBNAME" >> .env

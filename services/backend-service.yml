@@ -238,7 +238,7 @@ Resources:
           Command:
             - bash
             - "-c"
-            - "(/app/scripts/get_secrets.sh) && (/app/entrypoint.sh)"
+          # - "(/app/scripts/get_secrets.sh) && (/app/entrypoint.sh)"
           Environment:
             - Name: AWS_REGION
               Value: 'us-east-1'
@@ -315,7 +315,7 @@ Resources:
           Command:
             - bash
             - "-c"
-            - "(/app/scripts/get_secrets.sh) && (/app/celeryconf.sh)"
+          # - "(/app/scripts/get_secrets.sh) && (/app/celeryconf.sh)"
           Environment:
             - Name: AWS_REGION
               Value: 'us-east-1'
