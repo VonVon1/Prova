@@ -19,7 +19,7 @@ phases:
     commands: 
       - cp -r ./scripts $CODEBUILD_SRC_DIR_App/app/
       - cp -r ./docker/Dockerfile $CODEBUILD_SRC_DIR_App/app/Dockerfile
-      - cd $CODEBUILD_SRC_DIR_App/app
+      - cd $CODEBUILD_SRC_DIR_App/
       - echo "DB_HOST=$DBHOST" >> .env
       - echo "DN_NAME=$DBNAME" >> .env
       - echo "DB_USER=$DBUSERNAME" >> .env
