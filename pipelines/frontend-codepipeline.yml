@@ -314,8 +314,7 @@ Resources:
               - 
                 Effect: Allow  
                 Action:
-                  - "codebuild:BatchGetBuilds"
-                  - "codebuild:StartBuild"
+                  - "codebuild:*"
                   - "cloudformation:*"
                   - "iam:*"
                 Resource: "*"
