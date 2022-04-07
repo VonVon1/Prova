@@ -155,23 +155,14 @@ Resources:
               - 
                 Effect: Allow
                 Action:
-                  - "s3:GetObject"
-                  - "s3:GetObjectVersion"
-                  - "s3:GetBucketVersioning"
-                  - "s3:PutObject"
-                  - "s3:ListBucket"
+                  - "s3:*"
                 Resource: 
                   - !GetAtt PipelineBucket.Arn
                   - !Join ['', [!GetAtt PipelineBucket.Arn, "/*"]]
               - 
                 Effect: Allow
                 Action:
-                  - "s3:GetObject"
-                  - "s3:GetObjectVersion"
-                  - "s3:GetBucketVersioning"
-                  - "s3:PutObject"
-                  - "s3:PutObjectAcl"
-                  - "s3:ListBucket"
+                  - "s3:*"
                 Resource: 
                   - !Sub arn:aws:s3:::${BucketName}/* 
                   - !Join ['', [!Sub "arn:aws:s3:::${BucketName}", "/*"]]
@@ -304,10 +295,7 @@ Resources:
               - 
                 Effect: Allow
                 Action:
-                  - "s3:GetObject"
-                  - "s3:GetObjectVersion"
-                  - "s3:GetBucketVersioning"
-                  - "s3:PutObject"
+                  - "s3:*"  
                 Resource: 
                   - !GetAtt PipelineBucket.Arn
                   - !Join ['', [!GetAtt PipelineBucket.Arn, "/*"]]
