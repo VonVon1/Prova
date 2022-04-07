@@ -44,8 +44,10 @@ Parameters:
   BuildFolder:
     Type: String
     Description: "name of the folder created during the build"
+  BucketName:
+    Type: String
     
-    
+
 Metadata:
   AWS::CloudFormation::Interface:
     ParameterGroups:
