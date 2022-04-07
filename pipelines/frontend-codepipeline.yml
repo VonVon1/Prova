@@ -44,11 +44,8 @@ Parameters:
   BuildFolder:
     Type: String
     Description: "name of the folder created during the build"
-  BucketName:
-    Default: "bucket-front"
-    Type: String
     
-
+    
 Metadata:
   AWS::CloudFormation::Interface:
     ParameterGroups:
@@ -174,8 +171,8 @@ Resources:
                   - "s3:PutObjectAcl"
                   - "s3:ListBucket"
                 Resource: 
-                  - !Sub arn:aws:s3:::${CNAME}/* 
-                  - !Join ['', [!Sub "arn:aws:s3:::${CNAME}", "/*"]]
+                  - !Sub arn:aws:s3:::${BucketName}/* 
+                  - !Join ['', [!Sub "arn:aws:s3:::${BucketName}", "/*"]]
               -
                 Effect: Allow
                 Action:
@@ -245,7 +242,7 @@ Resources:
                 RoleArn: !GetAtt CloudFormationExecutionRole.Arn
                 ParameterOverrides: !Sub |
                   {
-                    "BucketName": "${BucketName}",
+                    "BucketName": "${CNAME}",
                     "HostedZoneName": "${HostedZoneName}",
                     "CNAME": "${CNAME}",
                     "CertificateArn": "${CertificateArn}",
