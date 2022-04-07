@@ -44,9 +44,6 @@ Parameters:
   BuildFolder:
     Type: String
     Description: "name of the folder created during the build"
-  BucketName:
-    Type: String
-    
 
 Metadata:
   AWS::CloudFormation::Interface:
@@ -155,17 +152,26 @@ Resources:
               - 
                 Effect: Allow
                 Action:
-                  - "s3:*"
+                  - "s3:GetObject"
+                  - "s3:GetObjectVersion"
+                  - "s3:GetBucketVersioning"
+                  - "s3:PutObject"
+                  - "s3:ListBucket"
                 Resource: 
                   - !GetAtt PipelineBucket.Arn
                   - !Join ['', [!GetAtt PipelineBucket.Arn, "/*"]]
               - 
                 Effect: Allow
                 Action:
-                  - "s3:*"
+                  - "s3:GetObject"
+                  - "s3:GetObjectVersion"
+                  - "s3:GetBucketVersioning"
+                  - "s3:PutObject"
+                  - "s3:PutObjectAcl"
+                  - "s3:ListBucket"
                 Resource: 
-                  - !Sub arn:aws:s3:::${BucketName}/* 
-                  - !Join ['', [!Sub "arn:aws:s3:::${BucketName}", "/*"]]
+                  - !Sub arn:aws:s3:::${CNAME}/* 
+                  - !Join ['', [!Sub "arn:aws:s3:::${CNAME}", "/*"]]
               -
                 Effect: Allow
                 Action:
@@ -295,20 +301,22 @@ Resources:
               - 
                 Effect: Allow
                 Action:
-                  - "s3:*"  
+                  - "s3:GetObject"
+                  - "s3:GetObjectVersion"
+                  - "s3:GetBucketVersioning"
+                  - "s3:PutObject"
                 Resource: 
                   - !GetAtt PipelineBucket.Arn
                   - !Join ['', [!GetAtt PipelineBucket.Arn, "/*"]]
               - 
                 Effect: Allow  
                 Action:
-                  - "codebuild:*"
+                  - "codebuild:BatchGetBuilds"
+                  - "codebuild:StartBuild"
                   - "cloudformation:*"
                   - "iam:*"
                 Resource: "*"
   # Temp bucket for storing build artifacts
   PipelineBucket: 
     Type: 'AWS::S3::Bucket'
-    DeletionPolicy: Delete
     Properties: {}
-    # teste
