@@ -44,6 +44,10 @@ Parameters:
   BuildFolder:
     Type: String
     Description: "name of the folder created during the build"
+  BucketName:
+    Default: "bucket-front"
+    Type: String
+    
 
 Metadata:
   AWS::CloudFormation::Interface:
@@ -241,7 +245,7 @@ Resources:
                 RoleArn: !GetAtt CloudFormationExecutionRole.Arn
                 ParameterOverrides: !Sub |
                   {
-                    "BucketName": "${CNAME}",
+                    "BucketName": "${BucketName}",
                     "HostedZoneName": "${HostedZoneName}",
                     "CNAME": "${CNAME}",
                     "CertificateArn": "${CertificateArn}",
