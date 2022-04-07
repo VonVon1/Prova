@@ -323,4 +323,5 @@ Resources:
   # Temp bucket for storing build artifacts
   PipelineBucket: 
     Type: 'AWS::S3::Bucket'
+    DeletionPolicy: Delete
     Properties: {}
